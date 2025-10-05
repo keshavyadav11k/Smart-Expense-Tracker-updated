@@ -1,0 +1,121 @@
+GIT + GITHUB CHEAT SHEET (For Flask / Python Projects)
+=========================================================
+
+1️⃣ INITIAL SETUP (One Time Only)
+---------------------------------
+git --version
+git config --global user.name "Your Name"
+git config --global user.email "your_email@example.com"
+
+2️⃣ START A NEW GIT REPOSITORY
+------------------------------
+cd "D:\PYTHON\VS CODE\Smart-Expense-Tracker"
+git init
+
+3️⃣ ADD AND COMMIT FILES
+------------------------
+git add .
+git commit -m "Initial commit - Flask setup with MySQL connection"
+
+4️⃣ CONNECT TO GITHUB
+---------------------
+git remote add origin https://github.com/<username>/Smart-Expense-Tracker.git
+
+5️⃣ PUSH CODE TO GITHUB
+-----------------------
+git branch -M main
+git push -u origin main
+
+6️⃣ REGULAR WORKFLOW (After Editing Files)
+------------------------------------------
+git add .
+git commit -m "Updated login and registration logic"
+git push
+
+7️⃣ PULL CHANGES (If You Update Repo from Another PC)
+-----------------------------------------------------
+git pull origin main
+
+8️⃣ CHECK STATUS AND HISTORY
+-----------------------------
+git status
+git log
+git branch
+git remote -v
+
+9️⃣ UNDO MISTAKES (SAFE COMMANDS)
+---------------------------------
+git restore filename.py
+git reset --soft HEAD~1
+git reset --hard HEAD~1   # ⚠️ Removes changes permanently
+
+🔟 BEST PRACTICES FOR FLASK PROJECTS
+-----------------------------------
+Add these to .gitignore file:
+
+venv/
+__pycache__/
+*.pyc
+.env
+instance/
+.DS_Store
+
+To create .gitignore:
+echo "venv/
+__pycache__/
+*.pyc
+.env
+instance/
+.DS_Store" > .gitignore
+
+FINAL COMMAND RECAP
+-------------------
+Initialize Repo      → git init
+Add Files            → git add .
+Commit Changes       → git commit -m "Message"
+Link Repo            → git remote add origin <repo_url>
+Push Code            → git push -u origin main
+Pull Updates         → git pull origin main
+
+
+Remove the virtual environment from Git tracking
+git rm -r --cached venv
+
+
+Add it to .gitignore
+Create (or edit) a .gitignore file in your project root:
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+
+
+Commit the change
+git add .gitignore
+git commit -m "Removed venv from tracking and updated .gitignore"
+
+Push to GitHub
+git push origin main
+
+
+unable to create .gitignore file
+Solution 1: Command prompt (best way)
+
+Sabse easy aur correct way hai command se banana 👇
+
+Apna project folder open karo.
+
+Address bar me likho cmd aur Enter dabao — ye folder me CMD khol dega.
+
+Ab ye command likho 👇
+echo # Git ignore file > .gitignore
+
+Bas! Ab ek .gitignore file ban jaayegi bina .txt ke.
+Ab ise VS Code me open karke andar likh lo:
+
+venv/
+__pycache__/
+*.pyc
+.env
+

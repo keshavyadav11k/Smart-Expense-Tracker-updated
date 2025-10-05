@@ -1,0 +1,65 @@
+create folder smart-expense-tracker 
+create venv using below command 
+python -m venv venv
+venv\Scripts\activate     (if this command is not working and giving error then use below command and then run this command again)
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+venv\Scripts\activate
+
+
+Smart-Expense-Tracker/
+│
+├── venv/                     ← ⚙️ Virtual environment (auto-created folder)
+│   ├── Scripts/
+│   ├── Lib/
+│   └── ...
+│
+├── app.py                    ← 🧠 Your Flask main app file
+├── requirements.txt           ← (Optional, for dependencies)
+│
+├── templates/                ← 🖼 HTML files yahan rahenge
+│   ├── index.html
+│   ├── login.html
+│   └── register.html
+│
+└── static/                   ← 🎨 CSS, JS, images (optional but recommended)
+    ├── style.css
+    └── script.js
+
+
+when created all the files and import all the libraries then make a requirements file using below command
+pip freeze >requirements.txt
+
+then moved to git part 
+use below command one by one 
+git init
+git status 
+git add --all      
+git add .     (same as above one else write one by one for single file)
+git commit -m "first commit"
+
+after that we need to push code to github and there are two ways 
+1.  using vscode if we have linked out account to github account
+2.  using push commands and before that we need to create the repository on github check below 
+
+🔗 2️⃣ Connect your local repo to GitHub
+
+👉 Go to GitHub → create a new empty repository (example: Smart-Expense-Tracker).
+
+Then copy the repo URL (example):
+https://github.com/<your-username>/Smart-Expense-Tracker.git
+
+Now connect it:
+git remote add origin https://github.com/<your-username>/Smart-Expense-Tracker.git
+
+⬆️ 3️⃣ Push your code to GitHub
+git branch -M main       # Rename branch to 'main' (standard)
+git push -u origin main  # Push all code to GitHub
+✅ After this, your full project (including app.py, templates/, etc.) will be visible on GitHub.
+🔁 4️⃣ Next Time (after changes)
+
+If you make some edits later, use these 3 commands only:
+git add .
+git commit -m "Updated registration form and MySQL logic"
+git push
+
+
