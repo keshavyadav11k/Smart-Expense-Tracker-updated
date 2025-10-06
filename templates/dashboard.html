@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SET | Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom right, #e0ddddff, #2d2e2dff);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .app-title {
+            background: linear-gradient(to right, #2575fc, #cb3c11);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
+            letter-spacing: 1.5px;
+        }
+        .card-bg {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        .btn-primary {
+            background-color: #2575fc;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #cb3c11;
+        }
+    </style>
+</head>
+<body>
+    <div class="max-w-6xl mx-auto">
+        <!-- Navbar -->
+        <nav class="flex justify-between items-center p-4 card-bg shadow-md mb-6">
+            <div class="text-xl font-extrabold app-title">SET Dashboard</div>
+            <div class="flex items-center space-x-4">
+                <!-- Link to Add Expense Page -->
+                <a href="/add_expense" class="btn-primary text-white py-2 px-4 rounded-lg font-semibold hover:shadow-lg transition duration-200">
+                    <i class="fas fa-plus-circle mr-2"></i> Add Expense
+                </a>
+                <!-- Link to Profile Page -->
+                <a href="/profile" class="text-gray-700 hover:text-[#2575fc] p-2 rounded-full transition duration-200">
+                    <i class="fas fa-user-circle text-2xl"></i>
+                </a>
+            </div>
+        </nav>
+
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Complete Dashboard Overview</h1>
+        
+        <!-- User Greeting and Details -->
+        <div class="card-bg p-4 flex items-center mb-6 border-l-4 border-[#cb3c11] shadow-lg">
+            <i class="fas fa-hand-sparkles text-3xl text-[#cb3c11] mr-4"></i>
+            <div>
+                <p class="text-sm font-semibold text-gray-500">Welcome back,</p>
+                <p class="text-xl font-bold text-gray-800">
+
+                    {{ name1 | default('Guest') }}
+
+                </p>
+            </div>
+        </div>
+        <!-- End User Greeting and Details -->
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Stat Card 1 -->
+            <div class="card-bg p-6 text-center border-b-4 border-[#2575fc]">
+                <p class="text-sm text-gray-500">Total Spent This Month</p>
+                <p class="text-4xl font-extrabold text-[#2575fc] mt-2">$1,250.75</p>
+            </div>
+            <!-- Stat Card 2 -->
+            <div class="card-bg p-6 text-center border-b-4 border-green-500">
+                <p class="text-sm text-gray-500">Budget Remaining</p>
+                <p class="text-4xl font-extrabold text-green-500 mt-2">$749.25</p>
+            </div>
+            <!-- Stat Card 3 -->
+            <div class="card-bg p-6 text-center border-b-4 border-yellow-500">
+                <p class="text-sm text-gray-500">Expense Count</p>
+                <p class="text-4xl font-extrabold text-yellow-500 mt-2">45</p>
+            </div>
+        </div>
+
+        <!-- Recent Transactions Table Placeholder -->
+        <div class="card-bg p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Recent Transactions</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">2024-10-06</td>
+                            <td class="px-6 py-4 whitespace-nowrap">Dinner at Cafe</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Food</span></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right font-medium text-red-600">-$28.00</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">2024-10-05</td>
+                            <td class="px-6 py-4 whitespace-nowrap">Amazon Subscription</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">Entertainment</span></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right font-medium text-red-600">-$14.99</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4 text-center text-sm text-[#2575fc] hover:text-[#cb3c11] cursor-pointer font-semibold">
+                View All Expenses <i class="fas fa-arrow-right ml-1 text-xs"></i>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -75,7 +75,7 @@
             justify-content: center;
             align-items: center;
             /* Explicit white background for the login form section */
-            background-color: white; 
+            background-color: black; 
         }
         
         .login-card {
@@ -89,6 +89,7 @@
         .form-control:focus {
             box-shadow: 0 0 0 0.25rem rgba(37, 117, 252, 0.25); /* Focus ring from the blue side */
             border-color: #2575fc;
+            
         }
         .btn-primary {
             /* Using the deep blue for the button */
@@ -101,8 +102,8 @@
         }
         h3 {
             /* Using a gradient that complements the background */
-            /*background: linear-gradient(to right, #cb3c11, #2575fc); */
-            color:#000000;
+            /*background: linear-gradient(to right, #ffffffff, #2575fc); */
+            color:#ffffffff;
             /*-webkit-background-clip: text;
             -webkit-text-fill-color: transparent;*/
             text-shadow: 0 0 5px rgba(37, 117, 252, 0.2);
@@ -114,10 +115,50 @@
         }
         .form-control {
             border-left: none;
+            
         }
+        .form-check-label{
+            color : white;
+        }
+        .text-muted {
+         color: white !important;
+        }
+        .alert-message {
+         text-align: center;
+         padding: 12px;
+         margin-bottom: 15px;
+         border-radius: 8px;
+         font-weight: 500;
+         font-size: 16px;
+        }
+
+/* Success Message (Green) */
+        .alert-message.success {
+           background-color: #d4edda;
+           color: #155724;
+          border: 1px solid #c3e6cb;
+        }
+
+/* Error Message (Red) */
+        .alert-message.error {
+         background-color: #f8d7da;
+          color: #721c24;
+          border: 1px solid #f5c6cb;
+        }
+        .alert-message {
+    animation: fadeIn 0.6s ease-in-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+
     </style>
 </head>
 <body>
+
     
     <div class="container-fluid login-container row g-0">
         
@@ -129,18 +170,25 @@
         </div>
 
         <div class="col-12 col-md-6 card-side">
+           
             
             <div class="login-card">
                 <h3 class="text-center mb-5 fw-bold">
                     SMART EXPENSE TRACKER
                 </h3>
+                {% if message %}
+                <div class="alert-message {{ message_type }}">
+                {{ message }}
+                </div>
+                {% endif %}
 
-                <form>
+
+                <form action="/perform_login" method="POST">
                     <div class="mb-4">
                         <label for="username" class="form-label visually-hidden">Username</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            <input type="text" class="form-control" id="username" placeholder="Username" required>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
                         </div>
                     </div>
                     
@@ -148,21 +196,21 @@
                         <label for="password" class="form-label visually-hidden">Password</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                            <input type="password" class="form-control" id="password" placeholder="Password" required>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                         </div>
                     </div>
                     
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div class="form-check">
+                       <!--<div class="form-check">
                             <input type="checkbox" class="form-check-input" id="rememberMe">
                             <label class="form-check-label" for="rememberMe">Remember me</label>
-                        </div>
+                        </div>*/ -->
                         <a href="#" class="text-decoration-none text-primary">Forgot password?</a>
                     </div>
                     
                     <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">Login</button>
                     
-                    <p class="mt-3 text-center text-muted">
+                    <p class="mt-3 text-center text-muted" >
                         Don't have an account? <a href="/register" class="text-decoration-none fw-bold text-primary">Sign up</a>
                     </p>
                 </form>

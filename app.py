@@ -1,12 +1,16 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,redirect,session,url_for
 # import mysql.connector
 import db 
 app = Flask(__name__)
-
+# IMPORTANT: Sessions require a secret key to sign the cookies. 
+# Change this to a long, complex, random value in a real application.
+app.secret_key = 'your_super_secure_secret_key_12345' 
 
 
 @app.route('/')
 def index():
+    if 'username' in session:
+        return redirect(url_for('user_dashboard'))
     return render_template('login.html')
 
 @app.route('/register')
@@ -20,17 +24,66 @@ def perform_registration():
     mydatabase = db.MyDatabase()
     name = request.form.get('name')
     email = request.form.get('email')
-    username = request.form.get('username')
+    username = request.form.get('username') 
     password = request.form.get('password')
 
     result  =  mydatabase.insertUserData(name,username,email,password)
     print("value of result is ",result)
     if result == 1:
         
-        return render_template('login.html')
+        return render_template('login.html',message='Account created successfully! Please log in to continue.',
+        message_type='success'                       )
         # return f"user registered successfully , {result}"
     else:
-        return f"user already present , {result}"
+        return render_template('register.html',message='This username is already taken. Kindly choose another.',
+        message_type='error')
+        # return f"user already present , {result}"
+    
+@app.route("/perform_login",methods = ['POST'])
+def perform_login():
+
+    mydatabase = db.MyDatabase()
+    username = request.form.get("username")
+    password = request.form.get("password")
+    result  = mydatabase.loginUser(username,password)
+    if result ==1:
+        # STEP 1: Store the successful username in the Flask session
+        session['username'] = username
+        # session['name'] = 
+        return redirect(url_for('user_dashboard'))
+    else:
+        # return f"invalid username or password {result}"
+        return render_template('login.html',message='Invalid username or password.',
+        message_type='error')
+    
+@app.route('/dashboard')
+def user_dashboard():
+    # STEP 2: Retrieve the username from the session
+    username = session.get('username')
+    name  = 'Keshav'
+     # Basic security check: if no username in session, redirect to login
+
+    if not username:
+        return redirect('/')
+
+    # STEP 3: Pass the username to the template using render_template
+    return render_template('dashboard.html', name1=name)
+
+@app.route('/profile')
+def user_profile():
+
+    return render_template('profile.html')
+
+@app.route('/add_expense')
+def add_expense():
+
+    return render_template('add_expense.html')
+
+@app.route('/logout')
+def logout():
+    # Clear the session data to log the user out
+    session.pop('username', None)
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)

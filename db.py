@@ -70,3 +70,37 @@ class MyDatabase:
             print("MySQL Error:", err)
         return self.check
 
+    def loginUser(self,username,password):
+        check = 1
+        try:
+            # SQL SELECT query
+            select_query = f'SELECT password FROM users where username = "{username}"'
+            print(select_query)
+            self.cursor.execute(select_query)
+
+            # Fetch all rows
+            rows = self.cursor.fetchall()
+            if rows:
+                # print(rows)
+                db_pass = [row[0] for row in rows]
+                print(db_pass)
+                if password  in db_pass:
+                    return check
+                else:
+                    check = 0
+                    return check 
+            else:
+                print("no record found")
+             # print("user in rows",rows)
+                check = 0
+                return check
+            
+            
+
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)
+        finally:    
+            if self.connection.is_connected():
+                self.cursor.close()
+                self.connection.close()
+       

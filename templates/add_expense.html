@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SET | Add New Expense - Reversed Button Order</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        
+        /* Universal Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden; 
+            background: linear-gradient(135deg, #f0f3f5 0%, #d8e0e7 100%);
+        }
+
+        /* The overall application container */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            min-height: 100vh;
+        }
+
+        /* Sticky Header Panel */
+        .form-header-panel {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #ffffff; /* White background for the header */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 2rem;
+        }
+
+        /* Main Form Content */
+        .form-content {
+            padding: 2rem;
+            flex-grow: 1; /* Allows content area to fill remaining space */
+            max-width: 900px; /* Max width for readability */
+            width: 100%;
+            margin: 0 auto; /* Center the content under the full-width header */
+        }
+        
+        /* --- Input Styles (Unified) --- */
+        .input-group-text {
+            background-color: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-right: none;
+            border-radius: 0.5rem 0 0 0.5rem;
+            padding: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+        .form-control {
+            border: 1px solid #d1d5db;
+            border-left: none;
+            border-radius: 0 0.5rem 0.5rem 0;
+            padding: 0.75rem;
+            transition: border-color 0.2s;
+            width: 100%;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.2);
+            border-color: #2575fc;
+            outline: none;
+        }
+        .btn-blue {
+            background-color: #1d4ed8;
+            transition: background-color 0.3s;
+        }
+        .btn-blue:hover {
+            background-color: #2563eb;
+        }
+        /* Primary button is now at the bottom */
+        .btn-primary-action {
+             background-color: #1d4ed8;
+             transition: background-color 0.3s;
+        }
+        .btn-primary-action:hover {
+            background-color: #2563eb;
+        }
+        /* Secondary button (Back to Dashboard) is now in the header */
+        .btn-secondary {
+            background-color: #cbd5e1; /* Light gray background */
+            color: #1f2937; /* Dark gray text */
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn-secondary:hover {
+            background-color: #94a3b8; /* Slightly darker gray on hover */
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="app-container">
+
+        <div class="form-header-panel">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center max-w-7xl mx-auto">
+                
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-3xl font-extrabold text-gray-800">
+                        <i class="fas fa-hand-holding-usd me-2 text-blue-600"></i> Record New Expense
+                    </h3>
+                    <p class="text-sm text-gray-500 mt-1">Enter the transaction details and save.</p>
+                </div>
+
+                <a href="/dashboard" class="btn-secondary text-center py-3 px-6 rounded-xl font-bold text-lg w-full md:w-auto shadow-md hover:shadow-lg inline-flex items-center justify-center space-x-2 order-first md:order-none">
+                    <i class="fas fa-arrow-left mr-2"></i> Go Back to Dashboard
+                </a>
+            </div>
+        </div>
+
+        <div class="form-content">
+            
+            <form id="expense-form" action="/add_expense" method="POST">
+                
+                <h4 class="text-xl font-semibold text-gray-700 mb-5 border-b pb-2">Transaction Details</h4>
+
+                <div class="flex flex-col md:flex-row md:space-x-8">
+                    
+                    <div class="flex-1 space-y-5">
+                        
+                        <div>
+                            <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">Expense Amount</label>
+                            <div class="flex">
+                                <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                                <input type="number" step="0.01" class="form-control" id="amount" name="amount" placeholder="e.g., 55.50" required>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                            <div class="flex">
+                                <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                <select class="form-control" id="category" name="category" required>
+                                    <option value="" disabled selected>Select a category</option>
+                                    <option value="Food">Food & Dining</option>
+                                    <option value="Transport">Transportation</option>
+                                    <option value="Utilities">Utilities</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                    <option value="Shopping">Shopping</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="flex-1 space-y-5 mt-5 md:mt-0">
+                        
+                        <div>
+                            <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date of Expense</label>
+                            <div class="flex">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                <input type="date" class="form-control" id="date" name="date" required>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Notes/Description</label>
+                            <textarea class="form-control resize-none h-32" id="description" name="description" rows="3" placeholder="Briefly describe the expense (e.g., groceries from Safeway)"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="mt-8 pt-4 border-t">
+                    <button type="submit" class="btn-primary-action text-white py-3 px-6 rounded-xl font-bold text-lg w-full shadow-lg hover:shadow-xl">
+                        <i class="fas fa-save mr-2"></i> Save Expense
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
