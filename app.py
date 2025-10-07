@@ -67,17 +67,42 @@ def user_dashboard():
         return redirect('/')
 
     # STEP 3: Pass the username to the template using render_template
-    return render_template('dashboard.html', name1=name)
+    return render_template('dashboard.html', username=username)
 
 @app.route('/profile')
 def user_profile():
 
-    return render_template('profile.html')
+    username = session.get('username')
+    mydatabase = db.MyDatabase()
+    response = mydatabase.get_user_details(username)
+    # print("hello username : ",response)
+    logged_in_name = response[0]
+    logged_in_email = response[1]
+    logged_in_username = response[2]
+    return render_template('profile.html',name=logged_in_name,email=logged_in_email,username=logged_in_username)
 
 @app.route('/add_expense')
 def add_expense():
+    # mydatabase = db.MyDatabase()
 
+    # mydatabase.add_user_expense()
     return render_template('add_expense.html')
+
+@app.route('/perform_add_expense',methods=['POST'])
+def perform_add_expense():
+    amount = request.form.get('amount')
+    category = request.form.get('category')
+    date = request.form.get('date')
+    description = request.form.get('description')
+    username = session.get('username')
+
+
+    mydatabase = db.MyDatabase()
+    print('flask insert details of expense',amount,category,description,date,username)
+    mydatabase.add_user_expense(amount,category,description,date,username)
+
+    return render_template('add_expense.html',message='Expense added successfully',
+                           message_type='success')
 
 @app.route('/logout')
 def logout():

@@ -98,6 +98,35 @@
             background-color: #94a3b8; /* Slightly darker gray on hover */
             color: white;
         }
+                      .alert-message {
+         text-align: center;
+         padding: 12px;
+         margin-bottom: 15px;
+         border-radius: 8px;
+         font-weight: 500;
+         font-size: 16px;
+        }
+
+/* Success Message (Green) */
+        .alert-message.success {
+           background-color: #d4edda;
+           color: #155724;
+          border: 1px solid #c3e6cb;
+        }
+
+/* Error Message (Red) */
+        .alert-message.error {
+         background-color: #f8d7da;
+          color: #721c24;
+          border: 1px solid #f5c6cb;
+        }
+        .alert-message {
+    animation: fadeIn 0.6s ease-in-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
     </style>
 </head>
 <body>
@@ -113,7 +142,11 @@
                     </h3>
                     <p class="text-sm text-gray-500 mt-1">Enter the transaction details and save.</p>
                 </div>
-
+                {% if message %}
+                <div class="alert-message {{ message_type }}">
+                {{ message }}
+                </div>
+                {% endif %}
                 <a href="/dashboard" class="btn-secondary text-center py-3 px-6 rounded-xl font-bold text-lg w-full md:w-auto shadow-md hover:shadow-lg inline-flex items-center justify-center space-x-2 order-first md:order-none">
                     <i class="fas fa-arrow-left mr-2"></i> Go Back to Dashboard
                 </a>
@@ -122,7 +155,8 @@
 
         <div class="form-content">
             
-            <form id="expense-form" action="/add_expense" method="POST">
+            
+            <form id="expense-form" action="/perform_add_expense" method="POST">
                 
                 <h4 class="text-xl font-semibold text-gray-700 mb-5 border-b pb-2">Transaction Details</h4>
 
@@ -168,7 +202,7 @@
 
                         <div>
                             <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Notes/Description</label>
-                            <textarea class="form-control resize-none h-32" id="description" name="description" rows="3" placeholder="Briefly describe the expense (e.g., groceries from Safeway)"></textarea>
+                            <textarea class="form-control resize-none h-32" id="description" name="description" rows="3" placeholder="Briefly describe the expense (e.g., groceries from Safeway)" required></textarea>
                         </div>
                     </div>
 

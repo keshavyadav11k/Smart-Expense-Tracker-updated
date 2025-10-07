@@ -103,4 +103,66 @@ class MyDatabase:
             if self.connection.is_connected():
                 self.cursor.close()
                 self.connection.close()
-       
+    
+    def get_user_details(self,username):
+
+        try:
+            # SQL SELECT query
+            select_query = f'SELECT name,email,username FROM users where username = "{username}"'
+            print(select_query)
+            self.cursor.execute(select_query)
+
+            # Fetch all rows
+            rows = self.cursor.fetchall()
+            # if rows:
+                # print("details of current user is : ",rows)
+                # db_pass = [row[0] for row in rows]
+                # print(db_pass)
+                # return check 
+            logged_in_name  = rows[0][0]
+            logged_in_email = rows[0][1]
+            logged_in_username  = rows[0][2]
+            # print(logged_in_name,logged_in_email,logged_in_username)
+            return logged_in_name,logged_in_email,logged_in_username
+            
+            
+
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)
+        finally:    
+            if self.connection.is_connected():
+                self.cursor.close()
+                self.connection.close()
+    
+
+    
+    def add_user_expense(self,amount,category,description,date,username):
+        try:
+
+            # flag = 1
+            # result  = self.checkduplicateuser(self.__username)
+            # if result == 1:
+                insert_query = "INSERT INTO expenses (amount,category,description,date,username) VALUES (%s, %s,%s, %s, %s)"
+                # Data to insert
+                amount = amount
+                category = category
+                description = description
+                date = date
+                username = username
+                print('db insert details of expense',amount,category,description,date,username)
+                data = (amount,category,description,date,username)  # user_id as float
+
+                self.cursor.execute(insert_query, data)
+                self.connection.commit()
+
+                print("Record inserted successfully!")
+                # return self.flag
+
+
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)
+
+        finally:    
+            if self.connection.is_connected():
+                self.cursor.close()
+                self.connection.close()
