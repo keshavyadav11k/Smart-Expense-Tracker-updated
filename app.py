@@ -65,9 +65,18 @@ def user_dashboard():
 
     if not username:
         return redirect('/')
+    else:
+        mydatabase = db.MyDatabase()
+        response = mydatabase.get_user_analysis(username)
+        amount_total_spent = response[0]
+        expense_count  =  response[1]
+        budget = response[2]
+        total_budget = response[3]
+
+
 
     # STEP 3: Pass the username to the template using render_template
-    return render_template('dashboard.html', username=username)
+    return render_template('dashboard.html', username=username,amount_total_spent=amount_total_spent,expense_count=expense_count,budget=budget,total_budget=total_budget)
 
 @app.route('/profile')
 def user_profile():
@@ -104,6 +113,29 @@ def perform_add_expense():
     return render_template('add_expense.html',message='Expense added successfully',
                            message_type='success')
 
+
+
+@app.route('/add_budget')
+def add_budget():
+    # mydatabase = db.MyDatabase()
+
+    # mydatabase.add_user_expense()
+    return render_template('add_budget.html')
+
+@app.route('/perform_add_budget',methods=['POST'])
+def perform_add_budget():
+    amount = request.form.get('amount')
+    
+    username = session.get('username')
+
+
+    mydatabase = db.MyDatabase()
+    print('flask insert details of expense',amount,username)
+    mydatabase.add_user_budget(amount,username)
+
+    return render_template('add_budget.html',message='Budget added successfully',
+                           message_type='success')
+
 @app.route('/logout')
 def logout():
     # Clear the session data to log the user out
@@ -111,4 +143,5 @@ def logout():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

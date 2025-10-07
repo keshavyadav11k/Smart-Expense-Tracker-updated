@@ -7,3 +7,17 @@ CREATE TABLE `set`.`expenses` (
   `username` VARCHAR(100) NOT NULL,
   FOREIGN KEY (`username`) REFERENCES users (`username`) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+
+CREATE TABLE `set`.`budget` ( `budget_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, `budget_month` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP , `budget_amount` DECIMAL(10,2) NOT NULL , `username` VARCHAR(100) NOT NULL , FOREIGN KEY (`username`) REFERENCES users (`username`) ON DELETE CASCADE) ENGINE = InnoDB;
+
+
+INSERT INTO `budget` (`budget_id`, `budget_month`, `budget_amount`, `username`) VALUES ('1', '2025-10-01', '10000', 'test_user');
+
+select (SELECT budget_amount FROM budget WHERE USERNAME = 'test_user'
+        AND MONTH(budget_month) = MONTH(CURRENT_DATE()) AND YEAR(budget_month) = YEAR(CURRENT_DATE()))-
+        (SELECT sum(amount) FROM expenses where username ='test_user'
+        AND MONTH(date) = MONTH(CURRENT_DATE()) AND YEAR(date) = YEAR(CURRENT_DATE())) AS result FROM DUAL;
+
+
+INSERT INTO `budget` (`budget_id`, `budget_month`, `budget_amount`, `username`) VALUES (NULL, '2025-10-01', '20000', 'arun123');

@@ -28,12 +28,19 @@
             border-radius: 1rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
+        .btn-budget {
+            background-color: #da1414ff;
+            transition: background-color 0.3s;
+        }
+        .btn-budget:hover {
+            background-color: #0e0c0cff;
+        }
         .btn-primary {
             background-color: #2575fc;
             transition: background-color 0.3s;
         }
         .btn-primary:hover {
-            background-color: #cb3c11;
+            background-color: #0b0c0bff;
         }
     </style>
 </head>
@@ -43,6 +50,10 @@
         <nav class="flex justify-between items-center p-4 card-bg shadow-md mb-6">
             <div class="text-xl font-extrabold app-title">SET Dashboard</div>
             <div class="flex items-center space-x-4">
+                <!--Link to add Budget for This month-->
+                 <a href="/add_budget" class="btn-budget text-white py-2 px-4 rounded-lg font-semibold hover:shadow-lg transition duration-200">
+                    <i class="fas fa-plus-circle mr-2"></i> Add Budget
+                </a>
                 <!-- Link to Add Expense Page -->
                 <a href="/add_expense" class="btn-primary text-white py-2 px-4 rounded-lg font-semibold hover:shadow-lg transition duration-200">
                     <i class="fas fa-plus-circle mr-2"></i> Add Expense
@@ -70,21 +81,35 @@
         </div>
         <!-- End User Greeting and Details -->
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <!-- Stat Card 1 -->
             <div class="card-bg p-6 text-center border-b-4 border-[#2575fc]">
                 <p class="text-sm text-gray-500">Total Spent This Month</p>
-                <p class="text-4xl font-extrabold text-[#2575fc] mt-2">$1,250.75</p>
+                <p class="text-4xl font-extrabold text-[#2575fc] mt-2">$
+                        {{ amount_total_spent}}
+
+                </p>
             </div>
             <!-- Stat Card 2 -->
             <div class="card-bg p-6 text-center border-b-4 border-green-500">
+                <p class="text-sm text-gray-500">Total Budget This Month</p>
+                <p class="text-4xl font-extrabold text-red-500 mt-2">$
+                    {{total_budget}}
+                </p>
+            </div>
+
+            <div class="card-bg p-6 text-center border-b-4 border-green-500">
                 <p class="text-sm text-gray-500">Budget Remaining</p>
-                <p class="text-4xl font-extrabold text-green-500 mt-2">$749.25</p>
+                <p class="text-4xl font-extrabold text-green-500 mt-2">$
+                    {{budget}}
+                </p>
             </div>
             <!-- Stat Card 3 -->
             <div class="card-bg p-6 text-center border-b-4 border-yellow-500">
-                <p class="text-sm text-gray-500">Expense Count</p>
-                <p class="text-4xl font-extrabold text-yellow-500 mt-2">45</p>
+                <p class="text-sm text-gray-500">Expense Count This Month</p>
+                <p class="text-4xl font-extrabold text-yellow-500 mt-2">
+                    {{expense_count}}
+                </p>
             </div>
         </div>
 
